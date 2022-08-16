@@ -6,9 +6,8 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // Removed REact.strictMode() from App.js as this was causing the useEffect on App.js to run twice
     <App />
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
