@@ -1,0 +1,55 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  background: #1e1e1e;
+  color: white;
+  border-bottom: 1px solid #333;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.toolbar-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toolbar-section label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.toolbar-section select {
+  background: #2a2a2a;
+  color: white;
+  border: 1px solid #444;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.color-toggle {
+  background: #6c5ce7;
+  color: white;
+}
+
+.save-btn {
+  background: #5cb85c;
+  color: white;
+}
+
+.load-btn {
+  background: #4a90e2;
+  color: white;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.clear-btn {
+  background: #d9534f;
+  color: white;
+}
