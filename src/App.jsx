@@ -4,6 +4,7 @@ import Toolbar from './components/Toolbar';
 import Sidebar from './components/Sidebar';
 import InfoPanel from './components/InfoPanel';
 import Statistics from './components/Statistics';
+import ControlsHelp from './components/ControlsHelp';
 import './App.css';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Sidebar />
         <div className="main-view">
           <Scene />
+          <ControlsHelp />
         </div>
         <div className="right-panel">
           <InfoPanel />
