@@ -1,0 +1,82 @@
+.statistics {
+  background: #2a2a2a;
+  color: white;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.statistics h3 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #aaa;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.stat-value.warning {
+  color: #ff6b6b;
+}
+
+.stat-small {
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.warning-banner {
+  background: #ff6b6b;
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.weight-bar,
+.space-bar {
+  height: 8px;
+  background: #444;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.weight-fill,
+.space-fill {
+  height: 100%;
+  transition: width 0.3s;
+}
+
+.weight-fill {
+  background: linear-gradient(90deg, #5cb85c, #f0ad4e);
+}
+
+.weight-fill.overweight {
+  background: #ff6b6b;
+}
+
+.space-fill {
+  background: linear-gradient(90deg, #4a90e2, #9b59b6);
+}

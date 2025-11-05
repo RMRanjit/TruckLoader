@@ -1,0 +1,46 @@
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.app-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.main-view {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.right-panel {
+  width: 300px;
+  background: #1a1a1a;
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+@media (max-width: 1200px) {
+  .right-panel {
+    width: 250px;
+  }
+}
+
+@media (max-width: 900px) {
+  .app-content {
+    flex-direction: column;
+  }
+
+  .right-panel {
+    width: 100%;
+    max-height: 30vh;
+  }
+}

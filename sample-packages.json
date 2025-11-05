@@ -1,0 +1,82 @@
+[
+  {
+    "productName": "LCD TV 55 inch",
+    "orderNumber": "ORD-1001",
+    "weight": 45.5,
+    "length": 4.5,
+    "width": 3,
+    "height": 2.5
+  },
+  {
+    "productName": "Washing Machine",
+    "orderNumber": "ORD-1002",
+    "weight": 180,
+    "length": 3,
+    "width": 3,
+    "height": 3.5
+  },
+  {
+    "productName": "Office Chair",
+    "orderNumber": "ORD-1003",
+    "weight": 25,
+    "length": 2.5,
+    "width": 2.5,
+    "height": 3
+  },
+  {
+    "productName": "Bookshelf",
+    "orderNumber": "ORD-1004",
+    "weight": 85,
+    "length": 5,
+    "width": 1.5,
+    "height": 6
+  },
+  {
+    "productName": "Microwave Oven",
+    "orderNumber": "ORD-1001",
+    "weight": 30,
+    "length": 2,
+    "width": 1.5,
+    "height": 1.5
+  },
+  {
+    "productName": "Refrigerator",
+    "orderNumber": "ORD-1005",
+    "weight": 250,
+    "length": 3,
+    "width": 3,
+    "height": 6
+  },
+  {
+    "productName": "Dining Table",
+    "orderNumber": "ORD-1003",
+    "weight": 120,
+    "length": 6,
+    "width": 3.5,
+    "height": 2.5
+  },
+  {
+    "productName": "Laptop Box",
+    "orderNumber": "ORD-1006",
+    "weight": 8,
+    "length": 1.5,
+    "width": 1,
+    "height": 0.5
+  },
+  {
+    "productName": "Tool Cabinet",
+    "orderNumber": "ORD-1007",
+    "weight": 95,
+    "length": 3,
+    "width": 2,
+    "height": 4
+  },
+  {
+    "productName": "Speaker System",
+    "orderNumber": "ORD-1001",
+    "weight": 15,
+    "length": 1.5,
+    "width": 1.5,
+    "height": 2
+  }
+]
