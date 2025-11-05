@@ -49,9 +49,27 @@ const Sidebar = () => {
   };
 
   const handleLoadToTruck = (pkg) => {
+    // Calculate spacing for new packages
+    const packages = useStore.getState().packages;
+    const spacing = 1; // 1 foot spacing between packages
+    let xPosition = 2;
+    let zPosition = 0;
+
+    // Find a non-overlapping position
+    if (packages.length > 0) {
+      // Place packages in a grid pattern
+      const gridSize = 3; // packages per row
+      const index = packages.length;
+      const row = Math.floor(index / gridSize);
+      const col = index % gridSize;
+
+      xPosition = 2 + (col * (pkg.dimensions.length + spacing));
+      zPosition = (row * (pkg.dimensions.width + spacing)) - 2;
+    }
+
     addPackage({
       ...pkg,
-      position: [2, pkg.dimensions.height / 2, 0]
+      position: [xPosition, pkg.dimensions.height / 2, zPosition]
     });
     removeAvailablePackage(pkg.id);
   };
