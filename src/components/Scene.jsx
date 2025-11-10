@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import Truck from './Truck';
 import Package from './Package';
+import DragHandler from './DragHandler';
 import useStore from '../store/useStore';
 
 const Scene = () => {
@@ -31,7 +32,11 @@ const Scene = () => {
           dampingFactor={0.05}
           minDistance={10}
           maxDistance={100}
+          makeDefault
         />
+
+        {/* Drag Handler */}
+        <DragHandler />
 
         {/* Truck */}
         <Truck />

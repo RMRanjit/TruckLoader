@@ -5,17 +5,15 @@ import useStore from '../store/useStore';
 import { getColorByWeight, getColorByOrder } from '../config/truckTypes';
 import {
   checkPackageCollision,
-  isWithinTruckBounds,
-  validateWeightStacking
+  isWithinTruckBounds
 } from '../utils/collisionDetection';
 import { getTruckById } from '../config/truckTypes';
 
 const Package = ({ packageData }) => {
   const meshRef = useRef();
-  const [isDragging, setIsDragging] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  const { camera, gl } = useThree();
+  const { gl } = useThree();
   const updatePackage = useStore(state => state.updatePackage);
   const packages = useStore(state => state.packages);
   const selectedPackageId = useStore(state => state.selectedPackageId);
@@ -34,47 +32,9 @@ const Package = ({ packageData }) => {
 
   const isSelected = selectedPackageId === packageData.id;
 
-  const handlePointerDown = (e) => {
+  const handleClick = (e) => {
     e.stopPropagation();
-    setIsDragging(true);
     setSelectedPackageId(packageData.id);
-    gl.domElement.style.cursor = 'grabbing';
-  };
-
-  const handlePointerUp = () => {
-    setIsDragging(false);
-    gl.domElement.style.cursor = 'pointer';
-  };
-
-  const handlePointerMove = (e) => {
-    if (!isDragging) return;
-    e.stopPropagation();
-
-    // Calculate new position based on mouse movement
-    const newPosition = [e.point.x, e.point.y, e.point.z];
-
-    // Ensure package stays on or above ground
-    if (newPosition[1] < height / 2) {
-      newPosition[1] = height / 2;
-    }
-
-    const testPackage = {
-      ...packageData,
-      position: newPosition
-    };
-
-    // Check truck bounds
-    if (!isWithinTruckBounds(testPackage, truck.dimensions)) {
-      return; // Don't update if outside truck
-    }
-
-    // Check collisions
-    const otherPackages = packages.filter(p => p.id !== packageData.id);
-    if (checkPackageCollision(testPackage, otherPackages)) {
-      return; // Don't update if collision detected
-    }
-
-    updatePackage(packageData.id, { position: newPosition });
   };
 
   return (
@@ -83,25 +43,22 @@ const Package = ({ packageData }) => {
       position={[x, y, z]}
       castShadow
       receiveShadow
-      onPointerDown={handlePointerDown}
-      onPointerUp={handlePointerUp}
-      onPointerMove={handlePointerMove}
+      onClick={handleClick}
       onPointerEnter={() => {
         setIsHovered(true);
-        gl.domElement.style.cursor = 'pointer';
+        gl.domElement.style.cursor = 'grab';
       }}
       onPointerLeave={() => {
         setIsHovered(false);
         gl.domElement.style.cursor = 'auto';
       }}
+      userData={{ packageId: packageData.id }}
     >
       <boxGeometry args={[length, height, width]} />
       <meshStandardMaterial
         color={baseColor}
         emissive={isSelected ? '#ffffff' : isHovered ? '#444444' : '#000000'}
         emissiveIntensity={isSelected ? 0.3 : isHovered ? 0.1 : 0}
-        opacity={isDragging ? 0.7 : 1}
-        transparent={isDragging}
       />
       {isSelected && (
         <lineSegments>

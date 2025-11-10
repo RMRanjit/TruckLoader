@@ -1,0 +1,81 @@
+.controls-help {
+  position: fixed;
+  bottom: 20px;
+  left: 320px;
+  background: rgba(42, 42, 42, 0.95);
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.controls-help.collapsed {
+  width: auto;
+}
+
+.toggle-help {
+  background: #4a90e2;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toggle-help:hover {
+  background: #357abd;
+}
+
+.controls-content {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 350px;
+}
+
+.control-item {
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.control-item:last-child {
+  border-bottom: none;
+}
+
+.control-item strong {
+  color: #4a90e2;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.control-item.note {
+  background: rgba(255, 193, 7, 0.1);
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: none;
+}
+
+.control-item.note em {
+  color: #ffc107;
+  font-style: normal;
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .controls-help {
+    left: 20px;
+    bottom: 80px;
+  }
+}

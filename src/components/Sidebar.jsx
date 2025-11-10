@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import useStore from '../store/useStore';
+import { getTruckById } from '../config/truckTypes';
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -49,9 +50,48 @@ const Sidebar = () => {
   };
 
   const handleLoadToTruck = (pkg) => {
+    // Get current truck dimensions
+    const selectedTruckType = useStore.getState().selectedTruckType;
+    const truck = getTruckById(selectedTruckType);
+    const { length: truckLength, width: truckWidth } = truck.dimensions;
+
+    const packages = useStore.getState().packages;
+    const spacing = 0.5; // 0.5 foot spacing between packages
+
+    // Calculate safe starting position (back of truck with padding)
+    // Truck X range is [0, length], Z range is [-width/2, +width/2]
+    const startX = pkg.dimensions.length / 2 + 0.5;
+
+    let xPosition = startX;
+    let zPosition = 0;
+
+    if (packages.length > 0) {
+      // Calculate how many packages fit per row
+      const maxPackageWidth = Math.max(...packages.map(p => p.dimensions.width), pkg.dimensions.width);
+      const packagesPerRow = Math.max(1, Math.floor((truckWidth - 1) / (maxPackageWidth + spacing)));
+
+      const index = packages.length;
+      const row = Math.floor(index / packagesPerRow);
+      const col = index % packagesPerRow;
+
+      // Place in rows along the length of the truck
+      xPosition = startX + (row * (pkg.dimensions.length + spacing));
+
+      // Distribute across the width
+      const colOffset = (col - (packagesPerRow - 1) / 2) * (maxPackageWidth + spacing);
+      zPosition = colOffset;
+    }
+
+    // Clamp to truck bounds with safety margin
+    const halfLength = pkg.dimensions.length / 2;
+    const halfWidth = pkg.dimensions.width / 2;
+
+    xPosition = Math.max(halfLength + 0.1, Math.min(xPosition, truckLength - halfLength - 0.1));
+    zPosition = Math.max(-truckWidth/2 + halfWidth + 0.1, Math.min(zPosition, truckWidth/2 - halfWidth - 0.1));
+
     addPackage({
       ...pkg,
-      position: [2, pkg.dimensions.height / 2, 0]
+      position: [xPosition, pkg.dimensions.height / 2, zPosition]
     });
     removeAvailablePackage(pkg.id);
   };
