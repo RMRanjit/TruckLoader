@@ -58,34 +58,62 @@ const Sidebar = () => {
     const packages = useStore.getState().packages;
     const spacing = 0.5; // 0.5 foot spacing between packages
 
-    // Calculate safe starting position (back of truck with padding)
-    // Truck X range is [0, length], Z range is [-width/2, +width/2]
-    const startX = pkg.dimensions.length / 2 + 0.5;
-
-    let xPosition = startX;
+    // Calculate safe starting position
+    let xPosition = pkg.dimensions.length / 2 + 0.5;
     let zPosition = 0;
 
     if (packages.length > 0) {
-      // Calculate how many packages fit per row
-      const maxPackageWidth = Math.max(...packages.map(p => p.dimensions.width), pkg.dimensions.width);
-      const packagesPerRow = Math.max(1, Math.floor((truckWidth - 1) / (maxPackageWidth + spacing)));
+      // Simple approach: find the first non-overlapping position
+      let positionFound = false;
 
-      const index = packages.length;
-      const row = Math.floor(index / packagesPerRow);
-      const col = index % packagesPerRow;
+      // Try positions in a grid pattern
+      const gridSpacing = 3; // Base grid spacing
+      const maxRows = Math.ceil(truckLength / gridSpacing);
+      const maxCols = Math.ceil(truckWidth / gridSpacing);
 
-      // Place in rows along the length of the truck
-      xPosition = startX + (row * (pkg.dimensions.length + spacing));
+      for (let row = 0; row < maxRows && !positionFound; row++) {
+        for (let col = 0; col < maxCols && !positionFound; col++) {
+          const testX = pkg.dimensions.length / 2 + 0.5 + (row * gridSpacing);
+          const testZ = (col - Math.floor(maxCols / 2)) * gridSpacing;
 
-      // Distribute across the width
-      const colOffset = (col - (packagesPerRow - 1) / 2) * (maxPackageWidth + spacing);
-      zPosition = colOffset;
+          // Check if this position is valid
+          const halfLength = pkg.dimensions.length / 2;
+          const halfWidth = pkg.dimensions.width / 2;
+
+          // Check truck bounds
+          if (testX - halfLength < 0 || testX + halfLength > truckLength ||
+              testZ - halfWidth < -truckWidth/2 || testZ + halfWidth > truckWidth/2) {
+            continue;
+          }
+
+          // Check for collisions with existing packages
+          let hasCollision = false;
+          for (const existingPkg of packages) {
+            const [ex, ey, ez] = existingPkg.position;
+            const { length: el, width: ew } = existingPkg.dimensions;
+
+            // Check if boxes overlap (2D collision in XZ plane)
+            if (
+              Math.abs(testX - ex) < (halfLength + el/2 + spacing) &&
+              Math.abs(testZ - ez) < (halfWidth + ew/2 + spacing)
+            ) {
+              hasCollision = true;
+              break;
+            }
+          }
+
+          if (!hasCollision) {
+            xPosition = testX;
+            zPosition = testZ;
+            positionFound = true;
+          }
+        }
+      }
     }
 
-    // Clamp to truck bounds with safety margin
+    // Final bounds check
     const halfLength = pkg.dimensions.length / 2;
     const halfWidth = pkg.dimensions.width / 2;
-
     xPosition = Math.max(halfLength + 0.1, Math.min(xPosition, truckLength - halfLength - 0.1));
     zPosition = Math.max(-truckWidth/2 + halfWidth + 0.1, Math.min(zPosition, truckWidth/2 - halfWidth - 0.1));
 
